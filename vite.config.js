@@ -18,7 +18,7 @@ const config = {
 	build: {
 		rollupOptions: {
 			plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })],
-			external: [/^Buffer*/]
+			// external: [/^bigint-buffer*/]
 		}
 	}
 	// resolve: {
