@@ -27,17 +27,21 @@
 			download(dataUrl, 'my-node.png');
 		});
 	};
-	let scale = 1;
+	let scaleTop = 40,
+		scaleBottom = 40;
+	let imgScale = 1;
+	let topText = 'Top Text';
+	let bottomText = 'Bottom Text';
 </script>
 
-<br />
+<!-- <br />
 New {$walletStore.publicKey}
 
 <button on:click={test}>Get</button>
-<br />
-<button on:click={downloadPNG}>Download Image</button>
+<br /> -->
+<button class="accent-button" on:click={downloadPNG}>Download Image</button>
 
-<h2>Select the images for the banner</h2>
+<h2>Select the image for the meme</h2>
 
 <div class="flex items-center justify-center">
 	<form class="grid grid-cols-3 gap-2 w-full max-w-screen-lg">
@@ -65,22 +69,76 @@ New {$walletStore.publicKey}
 
 <div class="mx-auto p-8 flex place-content-center">
 	<div id="preview">
-		<div class="w-full h-full overflow-clip flex place-content-center justify-center">
-			<img class="object-contain" alt="Meme" src={nft} style="transform: scale({scale});" />
+		<div class="w-full h-full overflow-clip flex place-content-center justify-center relative">
+			<img class="object-contain" alt="Meme" src={nft} style="transform: scale({imgScale});" />
+			<span
+				class="absolute top-4 impact text-white uppercase text-center mx-4 leading-tight"
+				style="font-size: {scaleTop}px;">{topText}</span
+			>
+			<span
+				class="absolute bottom-4 impact text-white uppercase text-center mx-4 leading-tight"
+				style="font-size: {scaleBottom}px;">{bottomText}</span
+			>
 		</div>
 	</div>
 </div>
 
-Scale
+Top Text
+
+<input
+	type="text"
+	name="top_text"
+	id="top_text"
+	class="focus:ring-red-500 focus:border-red-500 block w-full sm:w-1/4 pl-2 pr-2 sm:text-sm border-gray-300 rounded-lg"
+	bind:value={topText}
+	placeholder="Top Text"
+/>
+
+Bottom Text
+
+<input
+	type="text"
+	name="bottom_text"
+	id="bottom_text"
+	class="focus:ring-red-500 focus:border-red-500 block w-full sm:w-1/4 pl-2 pr-2 sm:text-sm border-gray-600 border-2 rounded-lg"
+	bind:value={bottomText}
+	placeholder="Bottom Text"
+/>
+
+Image Scale
 <div>
 	<input
-		id="scale"
+		id="imgScale"
 		type="range"
-		min="0.3"
+		min=".3"
 		max="1"
-		step="0.05"
-		class="w-full sm:w-1/4 h-3 bg-blue-200 accent-blue-600 rounded-lg appearance-none"
-		bind:value={scale}
+		step=".05"
+		class="w-full sm:w-1/4 h-3 bg-red-200 accent-red-600 rounded-lg appearance-none"
+		bind:value={imgScale}
+	/>
+</div>
+
+Font Scale
+<div>
+	<input
+		id="scaleTop"
+		type="range"
+		min="28"
+		max="80"
+		step="1"
+		class="w-full sm:w-1/4 h-3 bg-red-200 accent-red-600 rounded-lg appearance-none"
+		bind:value={scaleTop}
+	/>
+</div>
+<div>
+	<input
+		id="scaleBottom"
+		type="range"
+		min="28"
+		max="80"
+		step="1"
+		class="w-full sm:w-1/4 h-3 bg-red-200 accent-red-600 rounded-lg appearance-none"
+		bind:value={scaleBottom}
 	/>
 </div>
 
@@ -92,7 +150,11 @@ Scale
 		background-color: rebeccapurple;
 	}
 	input:checked + label {
-		border-color: orange;
+		border-color: red;
 		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	}
+	.impact {
+		font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+		-webkit-text-stroke: 0.15rem black;
 	}
 </style>

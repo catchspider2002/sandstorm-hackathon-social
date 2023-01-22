@@ -70,7 +70,7 @@
 	type="button"
 	on:click={connectPhantom}
 	title="Connect your wallet"
-	class="inline-flex items-center mt-4 px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+	class="accent-button"
 >
 	Connect Wallet
 </button> -->

@@ -90,7 +90,9 @@
 	};
 </script>
 
-<nav class="flex gap-6 justify-end container px-8 my-8 items-center">
+<nav
+	class="flex gap-6 justify-end container px-8 my-8 uppercase text-xl place-items-baseline place-content-end"
+>
 	<a href=".">Home</a>
 	<a href="meme-creator">Meme Creator</a>
 	<a href="tweet-creator">Tweet Creator</a>
@@ -102,22 +104,19 @@
 
 	{#if publicKey.length == 0}
 		<div class="group relative">
-			<button
-				class="inline-flex mx-auto items-center px-3 py-1.5 border border-transparent text-sm font-semibold rounded-md shadow-sm bg-alt-500 hover:bg-white text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-alt-500"
-				>Connect Wallet</button
-			>
+			<button class="accent-button">Connect Wallet</button>
 			<nav
 				tabindex="0"
-				class="border border-2 bg-gray-300 invisible border-grey-800 rounded absolute w-full left-0 top-full transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1"
+				class="border border-2 bg-red-800 invisible border-gray-800 rounded absolute w-full left-0 top-full transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1"
 			>
-				<ul class="text-grey-600 cursor-pointer">
-					<li class="px-4 py-3 hover:bg-grey-200 hover:text-alt-500" on:click={connectPhantom}>
+				<ul class="text-gray-200 cursor-pointer">
+					<li class="px-4 py-3 hover:bg-gray-200 hover:text-alt-500" on:click={connectPhantom}>
 						Phantom
 					</li>
-					<li class="px-4 py-3 hover:bg-grey-200 hover:text-alt-500" on:click={connectSolflare}>
+					<li class="px-4 py-3 hover:bg-gray-200 hover:text-alt-500" on:click={connectSolflare}>
 						Solflare
 					</li>
-					<!-- <li class="px-4 py-3 hover:bg-grey-200 hover:text-alt-500" on:click={connectExodus}>
+					<!-- <li class="px-4 py-3 hover:bg-gray-200 hover:text-alt-500" on:click={connectExodus}>
 						Exodus
 					</li> -->
 				</ul>
@@ -128,7 +127,7 @@
 		<button
 			type="button"
 			on:click={disconnectPhantom}
-			class="inline-flex mx-auto items-center px-3 py-1.5 border border-transparent text-sm font-semibold rounded-md shadow-sm bg-alt-500 hover:bg-white text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-alt-500"
+			class="inline-flex mx-auto items-center px-3 py-1.5 border border-transparent text-sm font-semibold rounded-xl shadow-sm bg-alt-500 hover:bg-white text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-alt-500"
 		>
 			Disconnect ({publicKey.substring(0, 4)}...{publicKey.substring(publicKey.length - 4)})
 		</button>

@@ -172,7 +172,7 @@ Scale
 		min="0.3"
 		max="1"
 		step="0.05"
-		class="w-full sm:w-1/4 h-3 bg-blue-200 accent-blue-600 rounded-lg appearance-none"
+		class="w-full sm:w-1/4 h-3 bg-red-200 accent-red-600 rounded-lg appearance-none"
 		bind:value={scale}
 	/>
 </div>
