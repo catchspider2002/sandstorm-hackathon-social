@@ -26,6 +26,7 @@
 
 <nav class="flex gap-6 justify-end container px-8 my-8 items-center">
 	<a href=".">Home</a>
+	<a href="meme-generator">Twitter Banner Creator</a>
 	<a href="banner-creator">Twitter Banner Creator</a>
 	<WalletProvider {localStorageKey} {wallets} autoConnect />
 	<ConnectionProvider {network} />
