@@ -9,7 +9,7 @@
 	import {
 		PhantomWalletAdapter,
 		SolflareWalletAdapter,
-		LedgerWalletAdapter
+		// LedgerWalletAdapter
 	} from '@solana/wallet-adapter-wallets';
 
 	const localStorageKey = 'walletAdapter';
@@ -18,7 +18,7 @@
 	let wallets = [
 		new PhantomWalletAdapter(),
 		new SolflareWalletAdapter(),
-		new LedgerWalletAdapter()
+		// new LedgerWalletAdapter()
 	];
 </script>
 
