@@ -6,12 +6,12 @@ const config = {
 	plugins: [
 		sveltekit()
 		// , nodePolyfills()
-	],
-	define: {
-		// global: {}
-		// process: {}
-		// 'process.env.ANCHOR_BROWSER': true
-	}
+	]
+	// define: {
+	// global: {}
+	// process: {}
+	// 'process.env.ANCHOR_BROWSER': true
+	// }
 	// build: {
 	// 	rollupOptions: {
 	// 		plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })]
