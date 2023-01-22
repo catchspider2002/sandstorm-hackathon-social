@@ -13,7 +13,7 @@ const config = {
 		// 'process.env.ANCHOR_BROWSER': true
 	},
 	optimizeDeps: {
-		exclude: ['bigint-buffer']
+		exclude: ['Buffer']
 	},
 	build: {
 		rollupOptions: {
