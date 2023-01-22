@@ -5,13 +5,15 @@
 
 	$: tweetText = '';
 
-	let getTweet = async () => {
+	async function getTweet() {
 		console.log('getTweet');
 		tweetText = await (
-			await fetch(`https://cloudflare-worker-nft.solswatch.workers.dev/tweets`)
-		).json();
+			await fetch(`https://cloudflare-worker-nft.solswatch.workers.dev/dojo-tweets`)
+		)
+			// await fetch(`https://dojotweets.naveencs.repl.co/tweets`)
+			.json();
 		console.log(tweetText);
-	};
+	}
 
 	const url =
 		'https://nwsdqoqflmkwq3colqikn7xn7yuxyx5ue7sooodif6i3bqvrjhqq.arweave.net/baQ4OgVbFWhsTlwQpv7t_il8X7Qn5Oc4aC-RsMKxSeE?ext=png';
@@ -36,6 +38,7 @@
 	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
 	onMount(async () => {
 		test();
+		getTweet();
 	});
 	let newData = [];
 	let test = async () => {
