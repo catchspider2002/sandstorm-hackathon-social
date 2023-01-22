@@ -9,4 +9,8 @@
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
+	<script type="module">
+		import { Buffer } from 'buffer';
+		window.Buffer = Buffer;
+	</script>
 </html>

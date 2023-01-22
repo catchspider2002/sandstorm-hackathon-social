@@ -1,6 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 // import nodePolyfills from 'rollup-plugin-polyfill-node';
-// import inject from '@rollup/plugin-inject';
+import inject from '@rollup/plugin-inject';
 
 const config = {
 	plugins: [
@@ -11,12 +11,17 @@ const config = {
 		// global: {}
 		// process: {}
 		// 'process.env.ANCHOR_BROWSER': true
+	},
+	build: {
+		rollupOptions: {
+			plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })]
+		}
+	},
+	resolve: {
+		alias: {
+			path: 'path-browserify'
+		}
 	}
-	// build: {
-	// 	rollupOptions: {
-	// 		plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })]
-	// 	}
-	// }
 };
 
 export default config;
