@@ -12,6 +12,9 @@ const config = {
 		// process: {}
 		// 'process.env.ANCHOR_BROWSER': true
 	},
+	optimizeDeps: {
+		exclude: ['bigint-buffer']
+	},
 	build: {
 		rollupOptions: {
 			plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })]
