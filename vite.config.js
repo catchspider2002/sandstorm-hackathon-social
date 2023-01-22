@@ -3,6 +3,16 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import inject from '@rollup/plugin-inject';
 
 const config = {
+	build: {
+		rollupOptions: {
+			plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })]
+		}
+	},
+	resolve: {
+		alias: {
+			path: 'path-browserify'
+		}
+	},
 	plugins: [
 		sveltekit()
 		// , nodePolyfills()
@@ -15,16 +25,6 @@ const config = {
 	// optimizeDeps: {
 	// 	exclude: ['Buffer']
 	// },
-	build: {
-		rollupOptions: {
-			plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })]
-		}
-	},
-	resolve: {
-		alias: {
-			path: 'path-browserify'
-		}
-	}
 };
 
 export default config;
