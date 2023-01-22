@@ -3,18 +3,6 @@
 	import * as htmlToImage from 'html-to-image';
 	import download from 'downloadjs';
 
-	$: tweetText = '';
-
-	async function getTweet() {
-		console.log('getTweet');
-		tweetText = await (
-			await fetch(`https://cloudflare-worker-nft.solswatch.workers.dev/dojo-tweets`)
-		)
-			// await fetch(`https://dojotweets.naveencs.repl.co/tweets`)
-			.json();
-		console.log(tweetText);
-	}
-
 	const url =
 		'https://nwsdqoqflmkwq3colqikn7xn7yuxyx5ue7sooodif6i3bqvrjhqq.arweave.net/baQ4OgVbFWhsTlwQpv7t_il8X7Qn5Oc4aC-RsMKxSeE?ext=png';
 	// const outputFile = `./img-removed-from-file.png`;
@@ -38,7 +26,6 @@
 	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
 	onMount(async () => {
 		test();
-		getTweet();
 	});
 	let newData = [];
 	let test = async () => {
@@ -66,11 +53,9 @@ New {$walletStore.publicKey}
 <button on:click={test}>Get</button>
 <br />
 <button on:click={downloadPNG}>Download Image</button>
-<button on:click={getTweet}>Get Tweet</button>
 
 <h2>Select the images for the banner</h2>
 
-{tweetText}
 <section class="flex py-8 justify-center items-center text-black bg-red-700">
 	<div class="grid grid-cols-3 gap-4">
 		{#each newData as item}

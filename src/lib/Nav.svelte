@@ -72,10 +72,10 @@
 	};
 
 	let disconnectPhantom = async () => {
-		if (window.exodus && window.exodus.solana) {
-			window.exodus.solana.disconnect();
-			window.exodus.solana.on('disconnect', () => console.log('exodus disconnected!'));
-		}
+		// if (window.exodus && window.exodus.solana) {
+		// 	window.exodus.solana.disconnect();
+		// 	window.exodus.solana.on('disconnect', () => console.log('exodus disconnected!'));
+		// }
 		if (window.solana) {
 			window.solana.disconnect();
 			window.solana.on('disconnect', () => console.log('phantom disconnected!'));
@@ -92,7 +92,8 @@
 
 <nav class="flex gap-6 justify-end container px-8 my-8 items-center">
 	<a href=".">Home</a>
-	<a href="meme-generator">Meme Generator</a>
+	<a href="meme-creator">Meme Creator</a>
+	<a href="tweet-creator">Tweet Creator</a>
 	<a href="banner-creator">Twitter Banner Creator</a>
 	<!-- <WalletProvider {localStorageKey} {wallets} autoConnect />
 	<ConnectionProvider {network} />
@@ -116,9 +117,9 @@
 					<li class="px-4 py-3 hover:bg-grey-200 hover:text-alt-500" on:click={connectSolflare}>
 						Solflare
 					</li>
-					<li class="px-4 py-3 hover:bg-grey-200 hover:text-alt-500" on:click={connectExodus}>
+					<!-- <li class="px-4 py-3 hover:bg-grey-200 hover:text-alt-500" on:click={connectExodus}>
 						Exodus
-					</li>
+					</li> -->
 				</ul>
 			</nav>
 		</div>
