@@ -7,14 +7,14 @@ const config = {
 		sveltekit()
 		// , nodePolyfills()
 	],
-	define: {
+	// define: {
 		// global: {}
 		// process: {}
 		// 'process.env.ANCHOR_BROWSER': true
-	},
-	optimizeDeps: {
-		exclude: ['Buffer']
-	},
+	// },
+	// optimizeDeps: {
+	// 	exclude: ['Buffer']
+	// },
 	build: {
 		rollupOptions: {
 			plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })]
