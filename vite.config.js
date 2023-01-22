@@ -17,7 +17,8 @@ const config = {
 	// },
 	build: {
 		rollupOptions: {
-			plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })]
+			plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })],
+			external: [/^Buffer*/]
 		}
 	}
 	// resolve: {
