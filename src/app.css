@@ -17,7 +17,7 @@
 	}
 	@font-face {
 		font-family: GloryBoldItalic;
-		src: local('Glory-BoldItalic'), local('glory-bolditalic'), url('/fonts/Glory-BoldItalic.ttf');
+		src: local('Glory-BoldItalic'), local('glorybolditalic'), url('/fonts/Glory-BoldItalic.ttf');
 		font-weight: normal;
 		font-display: swap;
 	}
@@ -36,18 +36,34 @@
 }
 @layer components {
 	.accent-button {
-		@apply inline-flex items-center mt-4 px-4 py-2 border border-transparent text-xl font-semibold rounded-xl shadow-sm text-red-200 bg-red-800 hover:bg-red-900 hover:text-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 uppercase gloryItalic;
+		@apply inline-flex items-center mt-4 px-4 py-2 border border-transparent text-xl font-semibold rounded-xl shadow-sm text-red-200 bg-red-800 hover:bg-red-900 hover:text-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 uppercase gloryItalic h-14;
+	}
+	.accent-range {
+		@apply w-full sm:w-3/4 h-1.5 bg-red-200 accent-red-600 rounded-lg appearance-none;
+	}
+	.accent-input {
+		@apply focus:ring-red-500 focus:border-red-500 focus:outline-none block pl-2 pr-2 border-gray-300 rounded-lg w-3/4 h-12 text-xl;
+	}
+
+	:root {
+		--card-bg: #1f2937;
+		--border-color: #4b5563;
+		--accent-color: #a22525;
+		--border-radius: 4px;
+		--body-bg: #111827;
 	}
 
 	html {
 		font-family: GloryRegular, GloryItalic, 'Arial Narrow Bold', sans-serif;
-		background: transparent linear-gradient(180deg, #232b5b 10%, #05060b 90%) 0 0 no-repeat
-			padding-box;
+		background: transparent linear-gradient(180deg, #232b5b 10%, #05060b 90%) 0 0 no-repeat padding-box;
 		color: white;
 		min-height: 100%;
 	}
 	.gloryItalic {
 		font-family: GloryItalic, GloryRegular, 'Arial Narrow Bold', sans-serif;
+	}
+	.glorybolditalic {
+		font-family: GloryBoldItalic, GloryRegular, 'Arial Narrow Bold', sans-serif;
 	}
 	input[type='text'] {
 		color: white;
@@ -55,5 +71,63 @@
 		border-width: 2px;
 		--tw-border-opacity: 1;
 		border-color: rgba(209, 213, 219, 0.3);
+	}
+	input[type='text'] {
+		border: 2px solid var(--border-color);
+		color: var(--body-text);
+		background-color: var(--body-bg);
+	}
+	input[type='text']:focus {
+		border: 2px solid var(--accent-color);
+	}
+
+	input[type='range'] {
+		/* width: 100%; */
+		margin: 7.3px 0;
+		background-color: var(--accent-color);
+		-webkit-appearance: none;
+	}
+	input[type='range']:focus {
+		outline: none;
+	}
+	input[type='range']::-webkit-slider-runnable-track {
+		background-color: var(--accent-color);
+		border-radius: var(--border-radius);
+		width: 100%;
+		height: 4px;
+		cursor: pointer;
+	}
+	@-moz-document url-prefix() {
+		input[type='range'] {
+			background-color: transparent;
+		}
+	}
+	input[type='range']::-moz-range-track {
+		background-color: var(--accent-color);
+		border-radius: var(--border-radius);
+		width: 100%;
+		height: 4px;
+		cursor: pointer;
+	}
+	input[type='range']:focus::-webkit-slider-runnable-track {
+		background-color: var(--accent-hover);
+	}
+	input[type='range']::-webkit-slider-thumb {
+		margin-top: -10.5px;
+		width: 24px;
+		height: 24px;
+		background-color: var(--body-bg);
+		border: 4px solid var(--accent-color);
+		border-radius: 9999px;
+		cursor: pointer;
+		-webkit-appearance: none;
+	}
+	input[type='range']::-moz-range-thumb {
+		width: 20px;
+		height: 20px;
+		background-color: var(--body-bg);
+		border: 4px solid var(--accent-color);
+		border-radius: 9999px;
+		cursor: pointer;
 	}
 }

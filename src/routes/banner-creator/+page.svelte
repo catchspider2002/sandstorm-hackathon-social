@@ -3,25 +3,8 @@
 	import * as htmlToImage from 'html-to-image';
 	import download from 'downloadjs';
 
-	const url =
-		'https://nwsdqoqflmkwq3colqikn7xn7yuxyx5ue7sooodif6i3bqvrjhqq.arweave.net/baQ4OgVbFWhsTlwQpv7t_il8X7Qn5Oc4aC-RsMKxSeE?ext=png';
+	const url = 'https://nwsdqoqflmkwq3colqikn7xn7yuxyx5ue7sooodif6i3bqvrjhqq.arweave.net/baQ4OgVbFWhsTlwQpv7t_il8X7Qn5Oc4aC-RsMKxSeE?ext=png';
 	// const outputFile = `./img-removed-from-file.png`;
-
-	// removeBackgroundFromImageUrl({
-	// 	url,
-	// 	apiKey: '1xnNe9hMWhpHNFC6dRbL2gDj',
-	// 	size: 'regular',
-	// 	format: 'png'
-	// 	// outputFile
-	// })
-	// 	.then((result) => {
-	// 		// console.log(`File saved to ${outputFile}`);
-	// 		base64img = result.base64img;
-	// 		// console.log(base64img);
-	// 	})
-	// 	.catch((errors) => {
-	// 		console.log(JSON.stringify(errors));
-	// 	});
 
 	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
 	onMount(async () => {
@@ -33,7 +16,8 @@
 		newData = await (
 			await fetch(
 				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/${$walletStore.publicKey}`
-				`https://cloudflare-worker-nft.solswatch.workers.dev/dojo/5HmSmywQTELaR1BY4jJXfUfhTxrGGHhWi6CddySd9Z3n`
+				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/5HmSmywQTELaR1BY4jJXfUfhTxrGGHhWi6CddySd9Z3n` //2 holding
+				`https://cloudflare-worker-nft.solswatch.workers.dev/dojo/HGvHae7XzXDP9qJo99g4w7NjQA2sNdHhVKhGJZ3nbz9a` //12 holding
 			)
 		).json();
 		// console.log(JSON.stringify(newData));
@@ -41,34 +25,41 @@
 
 	let downloadPNG = () => {
 		htmlToImage.toPng(document.getElementById('preview')).then(function (dataUrl) {
-			download(dataUrl, 'my-node.png');
+			download(dataUrl, 'Twitter-Banner.png');
 		});
 	};
 	let scale = 1;
 </script>
 
+<section class="px-2 py-32 md:px-0">
+	<div class="container items-center max-w-6xl px-5 mx-auto space-y-6 text-center">
+		<h1 class="text-4xl font-extrabold tracking-tight text-left sm:text-5xl md:text-6xl md:text-center">
+			<span class="block uppercase glorybolditalic">Twitter Banner Creator</span>
+		</h1>
+		<p class="w-full mx-auto text-base text-left text-gray-400 gloryItalic sm:text-lg lg:text-2xl md:max-w-3xl md:text-center">
+			Easily create Twitter banners featuring your unique Cyber Samurai NFT
+		</p>
+	</div>
+</section>
+
+<!-- 
 <br />
 New {$walletStore.publicKey}
 
 <button on:click={test}>Get</button>
-<br />
+<br /> -->
 <button on:click={downloadPNG}>Download Image</button>
 
 <h2>Select the images for the banner</h2>
 
-<section class="flex py-8 justify-center items-center text-black bg-red-700">
+<section class="flex py-8 justify-center items-center text-black">
 	<div class="grid grid-cols-3 gap-4">
 		{#each newData as item}
 			<label class="card">
-				<input
-					class="card__input absolute block outline-0 border-none bg-none p-0 m-0 appearance-none"
-					type="checkbox"
-				/>
+				<input class="card__input absolute block outline-0 border-none bg-none p-0 m-0 appearance-none" type="checkbox" />
 				<div class="card__body">
 					<div class="card__body-cover">
-						<img class="card__body-cover-image" src={item.image} /><span
-							class="card__body-cover-checkbox"
-						>
+						<img class="card__body-cover-image" src={item.image} /><span class="card__body-cover-checkbox">
 							<svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
 								<polyline points="1.5 6 4.5 9 10.5 1" />
 							</svg></span
@@ -83,81 +74,24 @@ New {$walletStore.publicKey}
 	</div>
 </section>
 
-<div class="flex items-center justify-center">
-	<!-- Component Start -->
-	<form class="grid grid-cols-3 gap-2 w-full max-w-screen-sm">
-		<div>
-			<input class="hidden" id="radio_1" type="radio" name="radio" checked />
-			<label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer" for="radio_1">
-				<span class="text-xs font-semibold uppercase">Small</span>
-				<span class="text-xl font-bold mt-2">$10/mo</span>
-				<ul class="text-sm mt-2">
-					<li>Thing 1</li>
-					<li>Thing 2</li>
-				</ul>
-			</label>
-		</div>
-		<div>
-			<input class="hidden" id="radio_2" type="radio" name="radio" />
-			<label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer" for="radio_2">
-				<span class="text-xs font-semibold uppercase">Medium</span>
-				<span class="text-xl font-bold mt-2">$40/mo</span>
-				<ul class="text-sm mt-2">
-					<li>Thing 1</li>
-					<li>Thing 2</li>
-					<img src="https://arweave.net/Hx-fWqNUppU2AxISqPwcIsIZiPf3VGQV6syTO3KWD1A?ext=png" />
-				</ul>
-			</label>
-		</div>
-		<div>
-			<input class="hidden" id="radio_3" type="radio" name="radio" />
-			<label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer" for="radio_3">
-				<span class="text-xs font-semibold uppercase">Big</span>
-				<span class="text-xl font-bold mt-2">$100/mo</span>
-				<ul class="text-sm mt-2">
-					<li>Thing 1</li>
-					<li>Thing 2</li>
-					<img src="https://arweave.net/baQ4OgVbFWhsTlwQpv7t_il8X7Qn5Oc4aC-RsMKxSeE?ext=png" />
-				</ul>
-			</label>
-		</div>
-	</form>
-	<!-- Component End  -->
-</div>
-
 <div class="mx-auto p-8 flex place-content-center">
 	<div id="preview">
 		{#if newData.length >= 3}
 			<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
 				{#each newData as mint}
-					<img
-						src={mint.image}
-						alt={mint.name}
-						class="object-contain"
-						style="transform: scale({scale});"
-					/>
+					<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
 				{/each}
 			</div>
 		{:else if newData.length == 2}
 			<div class="w-full h-full overflow-clip grid grid-cols-2 place-content-center justify-center">
 				{#each newData as mint}
-					<img
-						src={mint.image}
-						alt={mint.name}
-						class="object-contain"
-						style="transform: scale({scale});"
-					/>
+					<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
 				{/each}
 			</div>
 		{:else}
 			<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
 				{#each newData as mint}
-					<img
-						class="col-start-2 object-contain"
-						alt={mint.name}
-						src={mint.image}
-						style="transform: scale({scale});"
-					/>
+					<img class="col-start-2 object-contain" alt={mint.name} src={mint.image} style="transform: scale({scale});" />
 				{/each}
 			</div>
 		{/if}
@@ -184,18 +118,14 @@ Scale
 		aspect-ratio: 3/1;
 		background-color: rebeccapurple;
 	}
-	input:checked + label {
-		border-color: black;
-		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	}
 
 	.card {
 		--background: #fff;
-		--background-checkbox: #0082ff;
+		--background-checkbox: #a22525;
 		--background-image: #fff, rgba(0, 107, 175, 0.2);
 		--text-color: #666;
 		--text-headline: #000;
-		--card-shadow: #0082ff;
+		--card-shadow: #a22525;
 		--card-height: 300px;
 		--card-width: 300px;
 		--card-radius: 12px;
@@ -289,14 +219,7 @@ Scale
 		object-fit: cover;
 		border-radius: var(--c-border);
 		filter: var(--filter-bg, grayscale(1));
-		clip-path: polygon(
-			0% 0%,
-			100% 0%,
-			var(--x-y1, 100% 98%),
-			var(--x-y2, 67% 91%),
-			var(--x-y3, 33% 98%),
-			var(--x-y4, 0% 93%)
-		);
+		clip-path: polygon(0% 0%, 100% 0%, var(--x-y1, 100% 98%), var(--x-y2, 67% 91%), var(--x-y3, 33% 98%), var(--x-y4, 0% 93%));
 	}
 	.card__body-cover-checkbox {
 		background: var(--check-bg, var(--background-checkbox));
@@ -337,10 +260,4 @@ Scale
 		font-weight: 700;
 		margin-bottom: 6px;
 	}
-
-	/* .grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		grid-gap: 1rem; */
-	/* } */
 </style>
