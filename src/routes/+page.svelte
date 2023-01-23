@@ -29,7 +29,7 @@
 		</div>
 		<div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
 			<h2 class="text-4xl title-font font-medium mb-2">Meme Creator</h2>
-			<p class="leading-relaxed text-xl text-gray-400">Add humor to your Cyber Samurai NFT collection by turning them into memes.</p>
+			<p class="leading-relaxed text-xl text-gray-400">Make your Cyber Samurai NFT collection more entertaining by turning them into funny memes.</p>
 			<a href="meme-creator" class="mt-3 text-red-600 grid grid-flow-col gap-2 justify-start items-center"
 				>Learn More
 				<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">

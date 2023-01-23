@@ -28,7 +28,7 @@
 			<span class="block uppercase glorybolditalic">Meme Creator</span>
 		</h1>
 		<p class="w-full mx-auto text-base text-left text-gray-400 gloryItalic sm:text-lg lg:text-2xl md:max-w-3xl md:text-center">
-			Add humor to your Cyber Samurai NFT collection by turning them into memes
+			Make your Cyber Samurai NFT collection more entertaining by turning them into funny memes
 		</p>
 	</div>
 </section>
