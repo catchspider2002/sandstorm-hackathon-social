@@ -21,66 +21,102 @@
 			)
 		).json();
 		// console.log(JSON.stringify(newData));
+		selectedOptions = newData.slice(0, 2);
 	};
 
 	let downloadPNG = () => {
 		htmlToImage.toPng(document.getElementById('preview')).then(function (dataUrl) {
-			download(dataUrl, 'Twitter-Banner.png');
+			download(dataUrl, 'Twitter-Profile-Pic.png');
 		});
 	};
-	let scale = 1;
+	const max = 2;
+	let selectedOptions = [];
+	let nft = 'layout1';
+
+	let swapImage = () => {
+		if (document.getElementById('image1').src == selectedOptions[0].image) {
+			document.getElementById('image1').src = selectedOptions[1].image;
+			document.getElementById('image2').src = selectedOptions[0].image;
+		} else {
+			document.getElementById('image1').src = selectedOptions[0].image;
+			document.getElementById('image2').src = selectedOptions[1].image;
+		}
+	};
 </script>
 
 <section class="px-2 py-32 md:px-0">
 	<div class="container items-center max-w-6xl px-5 mx-auto space-y-6 text-center">
 		<h1 class="text-4xl font-extrabold tracking-tight text-left sm:text-5xl md:text-6xl md:text-center">
-			<span class="block uppercase glorybolditalic">Twitter Banner Creator</span>
+			<span class="block uppercase glorybolditalic">Profile Pic Creator</span>
 		</h1>
 		<p class="w-full mx-auto text-base text-left text-gray-400 gloryItalic sm:text-lg lg:text-2xl md:max-w-3xl md:text-center">
-			Easily create Twitter banners featuring your unique Cyber Samurai NFT
+			Stand out on Twitter with a custom profile picture created by collaging 2 of your Cyber Samurai NFT
 		</p>
 	</div>
 </section>
 
 <section class="mx-auto p-8 flex place-content-center">
 	<div id="preview">
-		{#if newData.length >= 3}
-			<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
-				{#each newData as mint}
-					<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
-				{/each}
-			</div>
-		{:else if newData.length == 2}
-			<div class="w-full h-full overflow-clip grid grid-cols-2 place-content-center justify-center">
-				{#each newData as mint}
-					<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
-				{/each}
-			</div>
-		{:else}
-			<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
-				{#each newData as mint}
-					<img class="col-start-2 object-contain" alt={mint.name} src={mint.image} style="transform: scale({scale});" />
-				{/each}
-			</div>
-		{/if}
+		<div class="flex relative w-full h-full">
+			<!-- {#each selectedOptions as mint} -->
+			{#if selectedOptions.length > 0}
+				<img id="image1" src={selectedOptions[0].image} alt={selectedOptions[0].name} class="object-contain" />
+			{/if}
+			{#if selectedOptions.length > 1}
+				<img id="image2" src={selectedOptions[1].image} alt={selectedOptions[1].name} class="object-contain w-full absolute {nft}" />
+			{/if}
+			<!-- {/each} -->
+		</div>
 	</div>
 </section>
 
-<!-- 
-<br />
-New {$walletStore.publicKey}
+<div class="flex place-content-center gap-8 mx-auto">
+	<button class="accent-button col-span-2" on:click={swapImage}>Swap Images</button>
+	<button class="accent-button col-span-2" on:click={downloadPNG}>Download Image</button>
+</div>
+
+<!--New {$walletStore.publicKey}
 
 <button on:click={test}>Get</button>
 <br /> -->
-<button on:click={downloadPNG}>Download Image</button>
 
-<h2>Select the images for the banner</h2>
+<h2 class="text-2xl pt-32 pb-8 gloryItalic text-center">Choose your collage layout</h2>
 
-<section class="flex py-8 justify-center items-center text-black">
+<div class="flex items-center justify-center">
+	<form class="grid grid-cols-5 gap-2 w-full max-w-screen-lg">
+		{#each Array(10) as _, index (index)}
+			<div class="flex w-full h-full">
+				<input class="hidden" id="radio_{index + 1}" bind:group={nft} type="radio" name="nft" value="layout{index + 1}" />
+				<label class="flex flex-col relative border-2 border-gray-400 cursor-pointer rounded-xl overflow-hidden" for="radio_{index + 1}">
+					<!-- <img class="rounded-lg" src={mint.image} alt={mint.name} /> -->
+					{#if selectedOptions.length > 0}
+						<img src={selectedOptions[0].image} alt={selectedOptions[0].name} class="object-contain" />
+					{/if}
+					{#if selectedOptions.length > 1}
+						<img src={selectedOptions[1].image} alt={selectedOptions[1].name} class="object-contain w-full absolute layout{index + 1}" />
+					{/if}
+				</label>
+			</div>
+		{/each}
+	</form>
+</div>
+
+<h2 class="text-2xl pt-32 gloryItalic text-center">
+	Choose max. {max} of your Cyber Samurai NFT
+</h2>
+
+<section class="flex pt-8 pb-32 justify-center items-center text-black">
 	<div class="grid grid-cols-3 gap-4">
-		{#each newData as item}
+		{#each newData as item, index}
 			<label class="card">
-				<input class="card__input absolute block outline-0 border-none bg-none p-0 m-0 appearance-none opacity-0" type="checkbox" />
+				<input
+					class="card__input absolute block outline-0 border-none bg-none p-0 m-0 appearance-none opacity-0"
+					type="checkbox"
+					bind:group={selectedOptions}
+					value={item}
+					id="item{index}"
+					disabled={selectedOptions.length === max && !selectedOptions.includes(item)}
+				/>
 				<div class="card__body">
 					<div class="card__body-cover">
 						<img class="card__body-cover-image" src={item.image} /><span class="card__body-cover-checkbox">
@@ -98,24 +134,11 @@ New {$walletStore.publicKey}
 	</div>
 </section>
 
-Scale
-<div>
-	<input
-		id="scale"
-		type="range"
-		min="0.3"
-		max="1"
-		step="0.05"
-		class="w-full sm:w-1/4 h-3 bg-red-200 accent-red-600 rounded-lg appearance-none"
-		bind:value={scale}
-	/>
-</div>
-
 <style>
 	#preview {
 		/* width: 1500px;
 		height: 500px; */
-		aspect-ratio: 3/1;
+		aspect-ratio: 1/1;
 		background-color: rebeccapurple;
 	}
 
@@ -263,4 +286,39 @@ Scale
 	}
 
 	/* https://codepen.io/aaw3k/pen/zYBxEWX */
+
+	.layout1 {
+		clip-path: polygon(50% 0, 100% 0%, 100% 100%, 50% 100%);
+	}
+	.layout2 {
+		clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+	}
+	.layout3 {
+		clip-path: polygon(0 0, 0% 100%, 100% 100%);
+	}
+	.layout4 {
+		clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+	}
+	.layout5 {
+		clip-path: circle(35% at 50% 50%);
+	}
+	.layout6 {
+		clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	}
+	.layout7 {
+		clip-path: polygon(100% 100%, 100% 0, 0 50%);
+	}
+	.layout8 {
+		clip-path: polygon(100% 50%, 0 0, 0 100%);
+	}
+	.layout9 {
+		clip-path: polygon(50% 0, 75% 0, 100% 50%, 0 100%, 0% 100%);
+	}
+	.layout10 {
+		clip-path: polygon(25% 0, 50% 0, 100% 100%, 0 50%);
+	}
+	input:checked + label {
+		border-color: red;
+		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	}
 </style>
