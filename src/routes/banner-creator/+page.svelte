@@ -15,6 +15,20 @@
 	let bgColor = '#f44336';
 
 	if ($keyData) selectedOptions = $keyData.slice(0, 2);
+
+	let id = (val) => document.getElementById(val);
+
+	let shuffle = (a) => {
+		for (let i = a.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]];
+		}
+		return a;
+	};
+
+	let swapImage = () => {
+		selectedOptions = shuffle(selectedOptions);
+	};
 </script>
 
 <section class="px-2 py-32 md:px-0">
@@ -23,7 +37,7 @@
 			<span class="block uppercase glorybolditalic">Twitter Banner Creator</span>
 		</h1>
 		<p class="w-full mx-auto text-base text-left text-gray-400 gloryItalic sm:text-lg lg:text-2xl md:max-w-3xl md:text-center">
-			Easily create Twitter banners featuring your unique Cyber Samurai NFT
+			Easily create Twitter banners that showcases your prized Cyber Samurai NFT and impress your followers.
 		</p>
 	</div>
 </section>
@@ -39,20 +53,20 @@
 		<div id="preview" style="background-color: {bgColor};">
 			{#if selectedOptions.length >= 3}
 				<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
-					{#each selectedOptions as mint}
-						<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
+					{#each selectedOptions as mint, index}
+						<img id="image{index + 1}" src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
 					{/each}
 				</div>
 			{:else if selectedOptions.length == 2}
 				<div class="w-full h-full overflow-clip grid grid-cols-2 place-content-center justify-center">
-					{#each selectedOptions as mint}
-						<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
+					{#each selectedOptions as mint, index}
+						<img id="image{index + 1}" src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
 					{/each}
 				</div>
 			{:else}
 				<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
-					{#each selectedOptions as mint}
-						<img class="col-start-2 object-contain" alt={mint.name} src={mint.image} style="transform: scale({scale});" />
+					{#each selectedOptions as mint, index}
+						<img id="image{index + 1}" src={mint.image} alt={mint.name} class="col-start-2 object-contain" style="transform: scale({scale});" />
 					{/each}
 				</div>
 			{/if}
@@ -72,7 +86,7 @@
 	</div>
 
 	<div class="flex place-content-center gap-8 mx-auto">
-		<!-- <button class="accent-button col-span-2" on:click={swapImage}>Swap Images</button> -->
+		<button class="accent-button col-span-2" on:click={swapImage}>Swap Images</button>
 		<button class="accent-button col-span-2" on:click={downloadPNG}>Download Banner</button>
 	</div>
 	<h2 class="text-2xl pt-32 gloryItalic text-center">

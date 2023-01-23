@@ -22,9 +22,9 @@
 	let test = async () => {
 		newData = await (
 			await fetch(
-				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/${$key}`
+				`https://cloudflare-worker-nft.solswatch.workers.dev/dojo/${$key}`
 				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/5HmSmywQTELaR1BY4jJXfUfhTxrGGHhWi6CddySd9Z3n` //2 holding
-				`https://cloudflare-worker-nft.solswatch.workers.dev/dojo/HGvHae7XzXDP9qJo99g4w7NjQA2sNdHhVKhGJZ3nbz9a` //12 holding
+				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/HGvHae7XzXDP9qJo99g4w7NjQA2sNdHhVKhGJZ3nbz9a` //12 holding
 			)
 		).json();
 		console.log(JSON.stringify(newData));
