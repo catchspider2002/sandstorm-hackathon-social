@@ -3,47 +3,10 @@
 	import download from 'downloadjs';
 	import ColorPicker from '$lib/ColorPicker.svelte';
 	import { key, keyData } from '../../stores.js';
-	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
-
-	// $: publicKey = '';
-	// let newData = [];
-
-	// const unsubscribe = key.subscribe((value) => (publicKey = value));
-	// const unsubscribeData = keyData.subscribe((value) => (newData = value));
-
-	// onDestroy(unsubscribe);
-	// onDestroy(unsubscribeData);
 
 	let nft = '';
-	let count = 0;
 
-	// onMount(async () => {
-	// 	test();
-	// });
-
-	// afterUpdate(async (promise) => {
-	// 	if (publicKey && count == 0) {
-	// 		await tick();
-	// 		await test();
-
-	// 		count++;
-	// 	}
-	// });
-
-	// let newData = [];
-	// let test = async () => {
-	// 	newData = await (
-	// 		await fetch(
-	// 			`https://cloudflare-worker-nft.solswatch.workers.dev/dojo/${$key}`
-	// 			// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/5HmSmywQTELaR1BY4jJXfUfhTxrGGHhWi6CddySd9Z3n` //2 holding
-	// 			// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/HGvHae7XzXDP9qJo99g4w7NjQA2sNdHhVKhGJZ3nbz9a` //12 holding
-	// 		)
-	// 	).json();
-	// 	nft = newData[0].image;
-	// 	// console.log(JSON.stringify(newData));
-	// };
-	console.log($key);
-	console.log($keyData);
+	if ($keyData && $keyData.length > 0) nft = $keyData[0].image;
 
 	let downloadPNG = () => {
 		htmlToImage.toPng(document.getElementById('preview')).then(function (dataUrl) {
@@ -74,7 +37,7 @@
 	<div class="text-2xl text-center mx-auto gloryItalic">Please connect your wallet.</div>
 {:else if $keyData.length == 0}
 	<div class="text-2xl text-center mx-auto gloryItalic">
-		It looks like the wallet you are using does not contain a Cyber Samurai NFT, please connect the wallet that does contain the Cyber Samurai NFT.
+		It looks like the wallet you are using does not contain a Cyber Samurai NFT, please connect the wallet that contains the Cyber Samurai NFT.
 	</div>
 {:else}
 	<section class="container mx-auto pb-32 text-xl gloryItalic">
@@ -82,7 +45,7 @@
 			<div class="grid grid-cols-2 gap-4">
 				<div class="px-4 sm:px-0">
 					<h3 class="text-2xl font-medium leading-6">Top Text</h3>
-					<p class="mt-1 text-lg text-gray-300">Easily add top text and adjust font size.</p>
+					<p class="mt-1 text-lg text-gray-400">Easily add top text and adjust font size.</p>
 				</div>
 				<div class="w-full">
 					<input type="text" name="top_text" id="top_text" class="accent-input mb-8" bind:value={topText} placeholder="Top Text" />
@@ -90,7 +53,7 @@
 				</div>
 				<div class="px-4 sm:px-0">
 					<h3 class="text-2xl font-medium leading-6">Bottom Text</h3>
-					<p class="mt-1 text-lg text-gray-300">Easily add bottom text and adjust font size.</p>
+					<p class="mt-1 text-lg text-gray-400">Easily add bottom text and adjust font size.</p>
 				</div>
 				<div class="w-full">
 					<input type="text" name="bottom_text" id="bottom_text" class="accent-input mb-4" bind:value={bottomText} placeholder="Bottom Text" />
@@ -98,12 +61,10 @@
 				</div>
 				<div class="px-4 sm:px-0">
 					<h3 class="text-2xl font-medium leading-6">Background and Zoom</h3>
-					<p class="mt-1 text-lg text-gray-300">Easily add background color and adjust the image zoom.</p>
+					<p class="mt-1 text-lg text-gray-400">Easily add background color and adjust the image zoom.</p>
 				</div>
 				<div class="grid w-full">
-					<!-- <span class="text-start">Background Color</span> -->
 					<ColorPicker bind:value={bgColor} />
-					<!-- <span class="text-end">Image Zoom</span> -->
 
 					<input id="imgScale" type="range" min=".3" max="1" step=".05" class="accent-range" bind:value={imgScale} />
 				</div>
@@ -130,7 +91,7 @@
 					<div>
 						<input class="hidden" id="radio_{i}" bind:group={nft} type="radio" name="nft" value={mint.image} />
 						<label class="flex flex-col p-2 border-2 border-gray-400 cursor-pointer rounded-xl" for="radio_{i}">
-							<span class="text-xs pb-2 font-semibold uppercase">{mint.name}</span>
+							<span class="text-xs pb-2 font-semibold uppercase text-gray-400">{mint.name}</span>
 							<img class="rounded-lg" src={mint.image} alt={mint.name} />
 						</label>
 					</div>
@@ -142,8 +103,6 @@
 
 <style>
 	#preview {
-		/* width: 1500px;
-		height: 500px; */
 		aspect-ratio: 1/1;
 	}
 	input:checked + label {

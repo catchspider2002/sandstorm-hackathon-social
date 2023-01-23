@@ -1,5 +1,5 @@
 <section class="container px-5 mx-auto text-2xl py-32 gloryItalic">
-	<div class="flex items-center lg:w-3/5 mx-auto border-b pb-10 mb-10 border-gray-200 flex-col sm:grid sm:grid-flow-col sm:gap-10">
+	<div class="flex items-center lg:w-3/5 mx-auto border-b pb-20 mb-10 border-gray-200 flex-col sm:grid sm:grid-flow-col sm:gap-10">
 		<div class="sm:w-32 sm:h-32 h-20 w-20 inline-flex items-center justify-center rounded-full bg-gray-900 text-red-600 flex-shrink-0">
 			<svg
 				fill="none"
@@ -24,9 +24,9 @@
 			</a>
 		</div>
 	</div>
-	<div class="flex items-center lg:w-3/5 mx-auto border-b pb-10 mb-10 border-gray-200 flex-col sm:grid sm:grid-flow-col sm:gap-10">
+	<div class="flex items-center lg:w-3/5 mx-auto border-b pb-20 mb-10 border-gray-200 flex-col sm:grid sm:grid-flow-col sm:gap-10">
 		<div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
-			<h2 class="text-4xl title-font font-medium mb-2">Profile Pic Creator</h2>
+			<h2 class="text-4xl title-font font-medium mb-2 pt-10">Profile Pic Creator</h2>
 			<p class="leading-relaxed text-xl text-gray-400">
 				Stand out on Twitter with a custom profile picture created by collaging 2 of your Cyber Samurai NFT.
 			</p>
@@ -71,7 +71,7 @@
 			</svg>
 		</div>
 		<div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
-			<h2 class="text-4xl title-font font-medium mb-2">Tweet Creator</h2>
+			<h2 class="text-4xl title-font font-medium pt-10 mb-2">Tweet Creator</h2>
 			<p class="leading-relaxed text-xl text-gray-400">Introduce yourself and showcase your Cyber Samurai NFT by generating a custom tweet.</p>
 			<a href="tweet-creator" class="mt-3 text-red-600 grid grid-flow-col gap-2 justify-start items-center"
 				>Learn More

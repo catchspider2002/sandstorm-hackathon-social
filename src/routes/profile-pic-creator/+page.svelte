@@ -1,36 +1,19 @@
 <script>
-	import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
 	import * as htmlToImage from 'html-to-image';
 	import download from 'downloadjs';
-
-	const url = 'https://nwsdqoqflmkwq3colqikn7xn7yuxyx5ue7sooodif6i3bqvrjhqq.arweave.net/baQ4OgVbFWhsTlwQpv7t_il8X7Qn5Oc4aC-RsMKxSeE?ext=png';
-	// const outputFile = `./img-removed-from-file.png`;
-
-	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
-	onMount(async () => {
-		test();
-	});
-	let newData = [];
-	let test = async () => {
-		// console.log($walletStore.publicKey);
-		newData = await (
-			await fetch(
-				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/${$walletStore.publicKey}`
-				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/5HmSmywQTELaR1BY4jJXfUfhTxrGGHhWi6CddySd9Z3n` //2 holding
-				`https://cloudflare-worker-nft.solswatch.workers.dev/dojo/HGvHae7XzXDP9qJo99g4w7NjQA2sNdHhVKhGJZ3nbz9a` //12 holding
-			)
-		).json();
-		// console.log(JSON.stringify(newData));
-		selectedOptions = newData.slice(0, 2);
-	};
+	import { key, keyData } from '../../stores.js';
 
 	let downloadPNG = () => {
 		htmlToImage.toPng(document.getElementById('preview')).then(function (dataUrl) {
 			download(dataUrl, 'Twitter-Profile-Pic.png');
 		});
 	};
+
 	const max = 2;
 	let selectedOptions = [];
+
+	if ($keyData) selectedOptions = $keyData.slice(0, 2);
+
 	let nft = 'layout1';
 
 	let swapImage = () => {
@@ -55,91 +38,91 @@
 	</div>
 </section>
 
-<section class="mx-auto p-8 flex place-content-center">
-	<div id="preview">
-		<div class="flex relative w-full h-full">
-			<!-- {#each selectedOptions as mint} -->
-			{#if selectedOptions.length > 0}
-				<img id="image1" src={selectedOptions[0].image} alt={selectedOptions[0].name} class="object-contain" />
-			{/if}
-			{#if selectedOptions.length > 1}
-				<img id="image2" src={selectedOptions[1].image} alt={selectedOptions[1].name} class="object-contain w-full absolute {nft}" />
-			{/if}
-			<!-- {/each} -->
-		</div>
+{#if $key == ''}
+	<div class="text-2xl text-center mx-auto gloryItalic">Please connect your wallet.</div>
+{:else if $keyData.length == 0}
+	<div class="text-2xl text-center mx-auto gloryItalic">
+		It looks like the wallet you are using does not contain a Cyber Samurai NFT, please connect the wallet that contains the Cyber Samurai NFT.
 	</div>
-</section>
-
-<div class="flex place-content-center gap-8 mx-auto">
-	<button class="accent-button col-span-2" on:click={swapImage}>Swap Images</button>
-	<button class="accent-button col-span-2" on:click={downloadPNG}>Download Image</button>
-</div>
-
-<!--New {$walletStore.publicKey}
-
-<button on:click={test}>Get</button>
-<br /> -->
-
-<h2 class="text-2xl pt-32 pb-8 gloryItalic text-center">Choose your collage layout</h2>
-
-<div class="flex items-center justify-center">
-	<form class="grid grid-cols-5 gap-2 w-full max-w-screen-lg">
-		{#each Array(10) as _, index (index)}
-			<div class="flex w-full h-full">
-				<input class="hidden" id="radio_{index + 1}" bind:group={nft} type="radio" name="nft" value="layout{index + 1}" />
-				<label class="flex flex-col relative border-2 border-gray-400 cursor-pointer rounded-xl overflow-hidden" for="radio_{index + 1}">
-					<!-- <img class="rounded-lg" src={mint.image} alt={mint.name} /> -->
-					{#if selectedOptions.length > 0}
-						<img src={selectedOptions[0].image} alt={selectedOptions[0].name} class="object-contain" />
-					{/if}
-					{#if selectedOptions.length > 1}
-						<img src={selectedOptions[1].image} alt={selectedOptions[1].name} class="object-contain w-full absolute layout{index + 1}" />
-					{/if}
-				</label>
+{:else}
+	<section class="mx-auto p-8 flex place-content-center">
+		<div id="preview">
+			<div class="flex relative w-full h-full">
+				<!-- {#each selectedOptions as mint} -->
+				{#if selectedOptions.length > 0}
+					<img id="image1" src={selectedOptions[0].image} alt={selectedOptions[0].name} class="object-contain" />
+				{/if}
+				{#if selectedOptions.length > 1}
+					<img id="image2" src={selectedOptions[1].image} alt={selectedOptions[1].name} class="object-contain w-full absolute {nft}" />
+				{/if}
+				<!-- {/each} -->
 			</div>
-		{/each}
-	</form>
-</div>
+		</div>
+	</section>
 
-<h2 class="text-2xl pt-32 gloryItalic text-center">
-	Choose max. {max} of your Cyber Samurai NFT
-</h2>
-
-<section class="flex pt-8 pb-32 justify-center items-center text-black">
-	<div class="grid grid-cols-3 gap-4">
-		{#each newData as item, index}
-			<label class="card">
-				<input
-					class="card__input absolute block outline-0 border-none bg-none p-0 m-0 appearance-none opacity-0"
-					type="checkbox"
-					bind:group={selectedOptions}
-					value={item}
-					id="item{index}"
-					disabled={selectedOptions.length === max && !selectedOptions.includes(item)}
-				/>
-				<div class="card__body">
-					<div class="card__body-cover">
-						<img class="card__body-cover-image" src={item.image} /><span class="card__body-cover-checkbox">
-							<svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
-								<polyline points="1.5 6 4.5 9 10.5 1" />
-							</svg></span
-						>
-					</div>
-					<header class="card__body-header">
-						<h2 class="card__body-header-title">{item.name}</h2>
-					</header>
-				</div>
-			</label>
-		{/each}
+	<div class="flex place-content-center gap-8 mx-auto">
+		<button class="accent-button col-span-2" on:click={swapImage}>Swap Images</button>
+		<button class="accent-button col-span-2" on:click={downloadPNG}>Download Profile Pic</button>
 	</div>
-</section>
+
+	<h2 class="text-2xl pt-32 pb-8 gloryItalic text-center">Choose your collage layout</h2>
+
+	<div class="flex items-center justify-center">
+		<form class="grid grid-cols-5 gap-2 w-full max-w-screen-lg">
+			{#each Array(10) as _, index (index)}
+				<div class="flex w-full h-full">
+					<input class="hidden" id="radio_{index + 1}" bind:group={nft} type="radio" name="nft" value="layout{index + 1}" />
+					<label class="flex flex-col relative border-2 border-gray-400 cursor-pointer rounded-xl overflow-hidden" for="radio_{index + 1}">
+						<!-- <img class="rounded-lg" src={mint.image} alt={mint.name} /> -->
+						{#if selectedOptions.length > 0}
+							<img src={selectedOptions[0].image} alt={selectedOptions[0].name} class="object-contain" />
+						{/if}
+						{#if selectedOptions.length > 1}
+							<img src={selectedOptions[1].image} alt={selectedOptions[1].name} class="object-contain w-full absolute layout{index + 1}" />
+						{/if}
+					</label>
+				</div>
+			{/each}
+		</form>
+	</div>
+
+	<h2 class="text-2xl pt-32 gloryItalic text-center">
+		Choose max. {max} of your Cyber Samurai NFT
+	</h2>
+
+	<section class="flex pt-8 pb-32 justify-center items-center text-black">
+		<div class="grid grid-cols-3 gap-4">
+			{#each $keyData as item, index}
+				<label class="card">
+					<input
+						class="card__input absolute block outline-0 border-none bg-none p-0 m-0 appearance-none opacity-0"
+						type="checkbox"
+						bind:group={selectedOptions}
+						value={item}
+						id="item{index}"
+						disabled={selectedOptions.length === max && !selectedOptions.includes(item)}
+					/>
+					<div class="card__body">
+						<div class="card__body-cover">
+							<img class="card__body-cover-image" src={item.image} /><span class="card__body-cover-checkbox">
+								<svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
+									<polyline points="1.5 6 4.5 9 10.5 1" />
+								</svg></span
+							>
+						</div>
+						<header class="card__body-header">
+							<h2 class="card__body-header-title">{item.name}</h2>
+						</header>
+					</div>
+				</label>
+			{/each}
+		</div>
+	</section>
+{/if}
 
 <style>
 	#preview {
-		/* width: 1500px;
-		height: 500px; */
 		aspect-ratio: 1/1;
-		background-color: rebeccapurple;
 	}
 
 	.card {

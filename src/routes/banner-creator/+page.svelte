@@ -1,27 +1,8 @@
 <script>
-	import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
 	import * as htmlToImage from 'html-to-image';
 	import download from 'downloadjs';
-
-	const url = 'https://nwsdqoqflmkwq3colqikn7xn7yuxyx5ue7sooodif6i3bqvrjhqq.arweave.net/baQ4OgVbFWhsTlwQpv7t_il8X7Qn5Oc4aC-RsMKxSeE?ext=png';
-	// const outputFile = `./img-removed-from-file.png`;
-
-	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
-	onMount(async () => {
-		test();
-	});
-	let newData = [];
-	let test = async () => {
-		// console.log($walletStore.publicKey);
-		newData = await (
-			await fetch(
-				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/${$walletStore.publicKey}`
-				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/5HmSmywQTELaR1BY4jJXfUfhTxrGGHhWi6CddySd9Z3n` //2 holding
-				`https://cloudflare-worker-nft.solswatch.workers.dev/dojo/HGvHae7XzXDP9qJo99g4w7NjQA2sNdHhVKhGJZ3nbz9a` //12 holding
-			)
-		).json();
-		// console.log(JSON.stringify(newData));
-	};
+	import ColorPicker from '$lib/ColorPicker.svelte';
+	import { key, keyData } from '../../stores.js';
 
 	let downloadPNG = () => {
 		htmlToImage.toPng(document.getElementById('preview')).then(function (dataUrl) {
@@ -29,6 +10,11 @@
 		});
 	};
 	let scale = 1;
+	const max = 3;
+	let selectedOptions = [];
+	let bgColor = '#f44336';
+
+	if ($keyData) selectedOptions = $keyData.slice(0, 2);
 </script>
 
 <section class="px-2 py-32 md:px-0">
@@ -42,74 +28,86 @@
 	</div>
 </section>
 
-<section class="mx-auto p-8 flex place-content-center">
-	<div id="preview">
-		{#if newData.length >= 3}
-			<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
-				{#each newData as mint}
-					<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
-				{/each}
-			</div>
-		{:else if newData.length == 2}
-			<div class="w-full h-full overflow-clip grid grid-cols-2 place-content-center justify-center">
-				{#each newData as mint}
-					<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
-				{/each}
-			</div>
-		{:else}
-			<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
-				{#each newData as mint}
-					<img class="col-start-2 object-contain" alt={mint.name} src={mint.image} style="transform: scale({scale});" />
-				{/each}
-			</div>
-		{/if}
+{#if $key == ''}
+	<div class="text-2xl text-center mx-auto gloryItalic">Please connect your wallet.</div>
+{:else if $keyData.length == 0}
+	<div class="text-2xl text-center mx-auto gloryItalic">
+		It looks like the wallet you are using does not contain a Cyber Samurai NFT, please connect the wallet that contains the Cyber Samurai NFT.
 	</div>
-</section>
-
-<!-- 
-<br />
-New {$walletStore.publicKey}
-
-<button on:click={test}>Get</button>
-<br /> -->
-<button on:click={downloadPNG}>Download Image</button>
-
-<h2>Select the images for the banner</h2>
-
-<section class="flex py-8 justify-center items-center text-black">
-	<div class="grid grid-cols-3 gap-4">
-		{#each newData as item}
-			<label class="card">
-				<input class="card__input absolute block outline-0 border-none bg-none p-0 m-0 appearance-none opacity-0" type="checkbox" />
-				<div class="card__body">
-					<div class="card__body-cover">
-						<img class="card__body-cover-image" src={item.image} /><span class="card__body-cover-checkbox">
-							<svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
-								<polyline points="1.5 6 4.5 9 10.5 1" />
-							</svg></span
-						>
-					</div>
-					<header class="card__body-header">
-						<h2 class="card__body-header-title">{item.name}</h2>
-					</header>
+{:else}
+	<section class="mx-auto p-8 flex place-content-center px-8 md:px-64 ">
+		<div id="preview" style="background-color: {bgColor};">
+			{#if selectedOptions.length >= 3}
+				<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
+					{#each selectedOptions as mint}
+						<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
+					{/each}
 				</div>
-			</label>
-		{/each}
-	</div>
-</section>
+			{:else if selectedOptions.length == 2}
+				<div class="w-full h-full overflow-clip grid grid-cols-2 place-content-center justify-center">
+					{#each selectedOptions as mint}
+						<img src={mint.image} alt={mint.name} class="object-contain" style="transform: scale({scale});" />
+					{/each}
+				</div>
+			{:else}
+				<div class="w-full h-full overflow-clip grid grid-cols-3 place-content-center justify-center">
+					{#each selectedOptions as mint}
+						<img class="col-start-2 object-contain" alt={mint.name} src={mint.image} style="transform: scale({scale});" />
+					{/each}
+				</div>
+			{/if}
+		</div>
+	</section>
 
-Scale
-<div>
-	<input
-		id="scale"
-		type="range"
-		min="0.3"
-		max="1"
-		step="0.05"
-		class="w-full sm:w-1/4 h-3 bg-red-200 accent-red-600 rounded-lg appearance-none"
-		bind:value={scale}
-	/>
-</div>
+	<div class="grid grid-cols-2 mx-auto place-content-center max-w-7xl py-12 gloryItalic">
+		<div class="px-4 sm:px-0">
+			<h3 class="text-2xl font-medium leading-6">Background and Zoom</h3>
+			<p class="mt-1 text-lg text-gray-400">Easily add background color and adjust the image zoom.</p>
+		</div>
+		<div class="grid gap-8 w-full">
+			<ColorPicker bind:value={bgColor} />
+
+			<input id="imgScale" type="range" min=".3" max="1" step=".05" class="accent-range" bind:value={scale} />
+		</div>
+	</div>
+
+	<div class="flex place-content-center gap-8 mx-auto">
+		<!-- <button class="accent-button col-span-2" on:click={swapImage}>Swap Images</button> -->
+		<button class="accent-button col-span-2" on:click={downloadPNG}>Download Banner</button>
+	</div>
+	<h2 class="text-2xl pt-32 gloryItalic text-center">
+		Choose max. {max} of your Cyber Samurai NFT
+	</h2>
+
+	<section class="flex pt-8 pb-32 justify-center items-center text-black">
+		<div class="grid grid-cols-3 gap-4">
+			{#each $keyData as item, index}
+				<label class="card">
+					<input
+						class="card__input absolute block outline-0 border-none bg-none p-0 m-0 appearance-none opacity-0"
+						type="checkbox"
+						bind:group={selectedOptions}
+						value={item}
+						id="item{index}"
+						disabled={selectedOptions.length === max && !selectedOptions.includes(item)}
+					/>
+					<div class="card__body">
+						<div class="card__body-cover">
+							<img class="card__body-cover-image" src={item.image} /><span class="card__body-cover-checkbox">
+								<svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
+									<polyline points="1.5 6 4.5 9 10.5 1" />
+								</svg></span
+							>
+						</div>
+						<header class="card__body-header">
+							<h2 class="card__body-header-title">{item.name}</h2>
+						</header>
+					</div>
+				</label>
+			{/each}
+		</div>
+	</section>
+{/if}
 
 <style>
 	#preview {
