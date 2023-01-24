@@ -27,7 +27,7 @@
 				// `https://cloudflare-worker-nft.solswatch.workers.dev/dojo/HGvHae7XzXDP9qJo99g4w7NjQA2sNdHhVKhGJZ3nbz9a` //12 holding
 			)
 		).json();
-		console.log(JSON.stringify(newData));
+		// console.log(JSON.stringify(newData));
 		keyData.set(newData);
 	};
 
